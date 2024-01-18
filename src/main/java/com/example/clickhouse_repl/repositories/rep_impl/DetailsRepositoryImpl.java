@@ -31,15 +31,15 @@ public class DetailsRepositoryImpl implements DetailsRepository {
     }
 
     @Override
-    public List<Map<String, String>> getComments(String tablePrefix, String type, int day) {
+    public Map<String, String> getComments(String tablePrefix, String type, int day) {
         String tableName = tablePrefix + "_" + day + "_" + type;
         String sql = "SELECT name, comment FROM system.columns WHERE table = '" + tableName
                 + "' AND database = '" + DB_PREFIX + "' AND comment != ''";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> {
-            Map<String, String> columnInfo = new HashMap<>();
-            columnInfo.put("name", rs.getString("name"));
-            columnInfo.put("comment", rs.getString("comment"));
-            return columnInfo;
+        Map<String, String> columnInfo = new HashMap<>();
+        jdbcTemplate.query(sql, (rs, rowNum) -> {
+            columnInfo.put(rs.getString("name"), rs.getString("comment"));
+            return null;
         });
+        return columnInfo;
     }
 }

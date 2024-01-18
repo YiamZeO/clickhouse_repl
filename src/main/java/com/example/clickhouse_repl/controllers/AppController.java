@@ -29,7 +29,7 @@ public class AppController {
     }
 
     @GetMapping("/get_comments")
-    public List<Map<String, String>> getComments(@RequestParam @NotNull String tablePrefix,
+    public Map<String, String> getComments(@RequestParam @NotNull String tablePrefix,
                                                  @RequestParam @NotNull String type,
                                                  @RequestParam @NotNull int day) {
         return detailsRepository.getComments(tablePrefix, type, day);
